@@ -75,10 +75,8 @@ const Contact: React.FC = () => {
             <div className="pt-6">
               <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Follow Me</h4>
               <div className="flex space-x-4">
-                <SocialButton href="#" label="LinkedIn" />
-                <SocialButton href="#" label="GitHub" />
-                <SocialButton href="#" label="Twitter" />
-                <SocialButton href="#" label="Instagram" />
+                <SocialButton href="https://www.linkedin.com/in/anjali-bharti-06ba69291/" label="LinkedIn" />
+                <SocialButton href="https://github.com/anj1064" label="GitHub" />
               </div>
             </div>
           </div>

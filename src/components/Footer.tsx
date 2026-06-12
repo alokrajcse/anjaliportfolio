@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -15,9 +15,8 @@ const Footer: React.FC = () => {
             </p>
           </div>
           <div className="flex space-x-4">
-            <SocialLink href="https://github.com" icon={<Github size={20} />} label="GitHub" />
-            <SocialLink href="https://linkedin.com" icon={<Linkedin size={20} />} label="LinkedIn" />
-            <SocialLink href="https://twitter.com" icon={<Twitter size={20} />} label="Twitter" />
+            <SocialLink href="https://github.com/anj1064" icon={<Github size={20} />} label="GitHub" />
+            <SocialLink href="https://www.linkedin.com/in/anjali-bharti-06ba69291/" icon={<Linkedin size={20} />} label="LinkedIn" />
             <SocialLink href="mailto:hello@example.com" icon={<Mail size={20} />} label="Email" />
           </div>
         </div>
