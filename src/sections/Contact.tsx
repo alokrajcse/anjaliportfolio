@@ -18,24 +18,62 @@ const Contact: React.FC = () => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitMessage(null);
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE";
+
+    if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE" || accessKey === "your_access_key_here") {
       setSubmitMessage({
-        type: 'success',
-        text: 'Your message has been sent successfully! I\'ll get back to you soon.',
+        type: 'error',
+        text: 'Form submission is not configured. Please add your Web3Forms Access Key to the .env file.',
       });
-      setFormState({ name: '', email: '', subject: '', message: '' });
-      
+      setIsSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("access_key", accessKey);
+    formData.append("name", formState.name);
+    formData.append("email", formState.email);
+    formData.append("subject", formState.subject);
+    formData.append("message", formState.message);
+    formData.append("from_name", formState.name);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitMessage({
+          type: 'success',
+          text: 'Your message has been sent successfully! I\'ll get back to you soon.',
+        });
+        setFormState({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitMessage({
+          type: 'error',
+          text: data.message || 'Something went wrong. Please try again.',
+        });
+      }
+    } catch (error) {
+      setSubmitMessage({
+        type: 'error',
+        text: 'Network error. Please check your connection and try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
       // Clear success message after 5 seconds
       setTimeout(() => {
         setSubmitMessage(null);
       }, 5000);
-    }, 1500);
+    }
   };
 
   return (
@@ -52,26 +90,26 @@ const Contact: React.FC = () => {
             Have a project in mind or want to discuss potential opportunities? I'd love to hear from you.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Contact Info */}
           <div className="lg:col-span-2 space-y-8">
-            <ContactItem 
+            <ContactItem
               icon={<Mail />}
               title="Email"
               details={<a href="mailto:hello@example.com" className="hover:text-blue-600 dark:hover:text-blue-400">anjalibhartijsr2004@gmail.com</a>}
             />
-            <ContactItem 
+            <ContactItem
               icon={<Phone />}
               title="Phone"
               details={<a href="tel:+11234567890" className="hover:text-blue-600 dark:hover:text-blue-400">+91 9955489673</a>}
             />
-            <ContactItem 
+            <ContactItem
               icon={<MapPin />}
               title="Location"
               details="Jamshedpur, India"
             />
-            
+
             <div className="pt-6">
               <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Follow Me</h4>
               <div className="flex space-x-4">
@@ -80,19 +118,18 @@ const Contact: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Contact Form */}
           <div className="lg:col-span-3 bg-white dark:bg-slate-900 rounded-lg shadow-md p-6 md:p-8">
             {submitMessage ? (
-              <div className={`p-4 rounded-md mb-6 ${
-                submitMessage.type === 'success' 
-                  ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300' 
-                  : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
-              }`}>
+              <div className={`p-4 rounded-md mb-6 ${submitMessage.type === 'success'
+                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
+                : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+                }`}>
                 {submitMessage.text}
               </div>
             ) : null}
-            
+
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
@@ -124,7 +161,7 @@ const Contact: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="mb-6">
                 <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Subject
@@ -139,7 +176,7 @@ const Contact: React.FC = () => {
                   className="w-full px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                 />
               </div>
-              
+
               <div className="mb-6">
                 <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Your Message
@@ -154,7 +191,7 @@ const Contact: React.FC = () => {
                   className="w-full px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                 ></textarea>
               </div>
-              
+
               <Button
                 type="submit"
                 variant="primary"
