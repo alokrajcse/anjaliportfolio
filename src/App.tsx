@@ -5,6 +5,7 @@ import About from './sections/About';
 import Projects from './sections/Projects';
 import Skills from './sections/Skills';
 import Contact from './sections/Contact';
+import Certificates from './sections/Certificates';
 import Footer from './components/Footer';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
       <About />
       <Projects />
       <Skills />
+      <Certificates />
       <Contact />
       <Footer />
     </div>
