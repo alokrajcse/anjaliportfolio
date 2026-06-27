@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Calendar, Briefcase, GraduationCap } from 'lucide-react';
+import profileImg from '../assets/profile.jpg';
 
 const About: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const About: React.FC = () => {
             <div className="relative">
               <div className="absolute inset-0 -rotate-6 rounded-2xl bg-blue-600/10 dark:bg-blue-500/10 transform -translate-x-3 translate-y-3"></div>
               <img
-                src="https://github.com/alokrajcse/ASSAN-Anjali-Profile/blob/main/anjalipark.jpg?raw=true"
+                src={profileImg}
                 alt="Professional portrait"
                 className="rounded-2xl relative z-10 w-full object-cover shadow-md"
               />

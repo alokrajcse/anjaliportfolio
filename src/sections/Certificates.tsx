@@ -25,10 +25,10 @@ const certificatesData: Certificate[] = [
   },
   {
     id: 4,
-    title: 'Claude Code Courses (6 Certificates)',
+    title: 'Claude Code Courses',
     issuer: 'Anthropic / Learning Platform',
-    description: 'Completed a series of 6 comprehensive courses covering AI-assisted coding, prompting techniques, and integrating Claude into development workflows.',
-    url: '#',
+    description: 'Completed comprehensive courses covering AI-assisted coding, prompting techniques, and integrating Claude into development workflows.',
+    url: 'https://drive.google.com/drive/folders/1E_9HC6wipHmw6vX4wwPtmM1fQdRDJ5qg?usp=sharing',
   }
 ];
 
@@ -47,7 +47,7 @@ const Certificates: React.FC = () => {
             A showcase of my commitment to continuous learning and staying updated with the latest technologies.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {certificatesData.map((cert) => (
             <CertificateCard key={cert.id} certificate={cert} />
